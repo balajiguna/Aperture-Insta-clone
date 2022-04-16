@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "857506146154",
+    "project_id": "aperture-cdeba",
+    "storage_bucket": "aperture-cdeba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:857506146154:android:48d222d0acb61d819f6713",
+        "android_client_info": {
+          "package_name": "com.wolfython.aperture"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "857506146154-ir1r1ejklja4caa3mkoqe2bgg2bm9onv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXmpT-3wjdYAn3MTCe0BiRtS3bYzbAksA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "857506146154-ir1r1ejklja4caa3mkoqe2bgg2bm9onv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

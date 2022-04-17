@@ -16,6 +16,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.wolfython.aperture.auth.SignupScreen
+import com.wolfython.aperture.main.NotificationMessage
 import com.wolfython.aperture.ui.theme.ApertureTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -46,6 +47,8 @@ sealed class  DestinationScreen(val route: String){
 fun InstagramApp(){
     val vm = hiltViewModel<IgViewModel>()
     val navController = rememberNavController() 
+    
+    NotificationMessage(vm = vm)
         
     NavHost(navController = navController, startDestination = DestinationScreen.Signup.route ){
      composable(DestinationScreen.Signup.route){

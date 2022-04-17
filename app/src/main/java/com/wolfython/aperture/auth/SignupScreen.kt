@@ -72,7 +72,15 @@ fun SignupScreen(navController: NavController, vm: IgViewModel){
                label = { Text(text ="Password")},
                visualTransformation = PasswordVisualTransformation()
            )
-               Button(onClick = { },
+               Button(onClick = {
+                                vm.onSignup(
+                                    usernameState.value.text,
+                                    emailState.value.text,
+                                    passState.value.text
+
+                                )
+
+               },
                modifier = Modifier.padding(8.dp)
                ) {
                         Text(text = "SIGN UP")

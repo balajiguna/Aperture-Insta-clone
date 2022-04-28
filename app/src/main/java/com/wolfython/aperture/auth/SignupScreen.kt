@@ -6,12 +6,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.saveable.rememberSaveableStateHolder
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.google.firebase.R
 import com.wolfython.aperture.IgViewModel
+import com.wolfython.aperture.main.CommonProgressSpinner
 
 @Composable
 fun SignupScreen(navController: NavController, vm: IgViewModel){
@@ -40,7 +38,7 @@ fun SignupScreen(navController: NavController, vm: IgViewModel){
            val emailState = remember{ mutableStateOf(TextFieldValue()) }
            val passState = remember{ mutableStateOf(TextFieldValue()) }
 
-           Image(painter = painterResource(id = com.wolfython.aperture.R.drawable.ig_logo),
+           Image(painter = painterResource(id = com.wolfython.aperture.R.drawable.apeture_logo),
                contentDescription = null,
            modifier = Modifier
                .width(250.dp)
@@ -81,18 +79,31 @@ fun SignupScreen(navController: NavController, vm: IgViewModel){
                                 )
 
                },
-               modifier = Modifier.padding(8.dp)
+                   //added custom Rgb color using decimal code
+               modifier = Modifier.padding(8.dp), colors = ButtonDefaults.buttonColors(backgroundColor = Color(255,165,0))
+
                ) {
                         Text(text = "SIGN UP")
+
+
                }
+
+
+
+
            Text(text = "Already a user? Go to login ->",
            color = Color.Red,
-           modifier = Modifier.padding(8.dp)
-               .clickable {  }
+           modifier = Modifier
+               .padding(8.dp)
+               .clickable { }
            )
            
            
 
+       }
+       val isloading = vm.inProgress.value
+       if (isloading){
+           CommonProgressSpinner()
        }
    }
 }

@@ -2,9 +2,9 @@
 <resources>
 
     <style name="Theme.Aperture" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/purple_700</item>
+        <item name="android:statusBarColor">#FFAB00</item>
     </style>
     <style name="Theme.Aperture.NoActionBar" parent="android:Theme.Material.NoActionBar">
-        <item name="android:statusBarColor">@color/purple_700</item>
+        <item name="android:statusBarColor">#FFAB00</item>
     </style>
 </resources>

@@ -15,6 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.wolfython.aperture.auth.LoginScreen
 import com.wolfython.aperture.auth.SignupScreen
 import com.wolfython.aperture.main.NotificationMessage
 import com.wolfython.aperture.ui.theme.ApertureTheme
@@ -40,6 +41,7 @@ class MainActivity : ComponentActivity() {
 
 sealed class  DestinationScreen(val route: String){
     object Signup: DestinationScreen("signup")
+    object Login: DestinationScreen("Login")
 }
 
 
@@ -53,7 +55,11 @@ fun InstagramApp(){
     NavHost(navController = navController, startDestination = DestinationScreen.Signup.route ){
      composable(DestinationScreen.Signup.route){
          SignupScreen(navController = navController, vm = vm )
+
      }
+        composable(DestinationScreen.Login.route){
+            LoginScreen(navController = navController, vm = vm)
+        }
 
     }
 

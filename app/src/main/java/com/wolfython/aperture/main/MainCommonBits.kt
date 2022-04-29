@@ -14,6 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavController
+import com.wolfython.aperture.DestinationScreen
 import com.wolfython.aperture.IgViewModel
 import javax.sql.CommonDataSource
 
@@ -44,4 +46,14 @@ fun CommonProgressSpinner(){
     
     
     
+}
+
+fun navigateTo(navController: NavController, dest: DestinationScreen){
+ navController.navigate(dest.route){
+     popUpTo(dest.route)
+     launchSingleTop = true
+ }
+
+
+
 }

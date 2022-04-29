@@ -12,6 +12,7 @@ import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -20,11 +21,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.google.firebase.R
+import com.wolfython.aperture.DestinationScreen
 import com.wolfython.aperture.IgViewModel
 import com.wolfython.aperture.main.CommonProgressSpinner
+import com.wolfython.aperture.main.navigateTo
 
 @Composable
 fun SignupScreen(navController: NavController, vm: IgViewModel){
+    val focus = LocalFocusManager.current
    Box(modifier = Modifier.fillMaxSize()){
 
        Column(modifier = Modifier
@@ -71,7 +75,9 @@ fun SignupScreen(navController: NavController, vm: IgViewModel){
                visualTransformation = PasswordVisualTransformation()
            )
                Button(onClick = {
+                   focus.clearFocus(force = true)
                                 vm.onSignup(
+
                                     usernameState.value.text,
                                     emailState.value.text,
                                     passState.value.text
@@ -87,20 +93,19 @@ fun SignupScreen(navController: NavController, vm: IgViewModel){
 
 
                }
-
-
-
-
            Text(text = "Already a user? Go to login ->",
-           color = Color.Red,
-           modifier = Modifier
-               .padding(8.dp)
-               .clickable { }
-           )
-           
-           
+               color = Color.Red,
+               modifier = Modifier
+                   .padding(8.dp)
+                   .clickable {
 
+                       navigateTo(navController,DestinationScreen.Login)
+                   }
+           )
        }
+
+
+
        val isloading = vm.inProgress.value
        if (isloading){
            CommonProgressSpinner()

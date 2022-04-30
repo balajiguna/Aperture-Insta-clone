@@ -26,10 +26,13 @@ import androidx.navigation.NavController
 import com.wolfython.aperture.DestinationScreen
 import com.wolfython.aperture.IgViewModel
 import com.wolfython.aperture.R
+import com.wolfython.aperture.main.CheckForSignedIn
 import com.wolfython.aperture.main.navigateTo
 
 @Composable
 fun LoginScreen(navController: NavController, vm: IgViewModel){
+
+    CheckForSignedIn(vm = vm, navController = navController)
 
     val focus = LocalFocusManager.current
 
@@ -50,9 +53,9 @@ fun LoginScreen(navController: NavController, vm: IgViewModel){
 
             Image(painter = painterResource(id = R.drawable.apeture_logo),
                 contentDescription = null, modifier = Modifier
-                .width(250.dp)
-                .padding(top = 16.dp)
-                .padding(8.dp) )
+                    .width(250.dp)
+                    .padding(top = 16.dp)
+                    .padding(8.dp) )
             
           Text(text = "Login",
               modifier =Modifier.padding(8.dp),
@@ -71,6 +74,7 @@ fun LoginScreen(navController: NavController, vm: IgViewModel){
             )
             Button(onClick = {
                              focus.clearFocus(force = true)
+                vm.onLogin(emailState.value.text,passState.value.text)
 
             },
                 //added custom Rgb color using decimal code

@@ -13,6 +13,7 @@ import com.wolfython.aperture.data.UserData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.lang.Exception
 import javax.inject.Inject
+import kotlin.math.exp
 
 
 const val USERS = "users"
@@ -32,7 +33,7 @@ class IgViewModel @Inject constructor(
 
 
  init {
-
+  auth.signOut()
   val currentUser = auth.currentUser
   signedIn.value =currentUser !=null
   currentUser?.uid?.let { uid->
@@ -42,6 +43,10 @@ class IgViewModel @Inject constructor(
 
  fun onSignup(username: String, email : String, pass: String){
 
+  if(username.isEmpty() or email.isEmpty() or pass.isEmpty() ){
+   handleException(customMessage = "Please Fill In All Fields")
+   return
+  }
  inProgress.value = true
 
   db.collection(USERS).whereEqualTo("username",username).get()
@@ -66,6 +71,42 @@ class IgViewModel @Inject constructor(
    }
 
    .addOnFailureListener {  }
+
+ }
+
+ fun onLogin(email: String,pass: String){
+
+  if (email.isEmpty() or pass.isEmpty()){
+   handleException(customMessage = "Please Fill In All Fields")
+   return
+  }
+  inProgress.value = true
+  auth.signInWithEmailAndPassword(email,pass)
+   .addOnCompleteListener { task->
+
+    if (task.isSuccessful){
+     signedIn.value = true
+     inProgress.value = false
+     auth.currentUser?.uid?.let { uid ->
+      handleException(customMessage = "Login Success")
+      getUserData(uid)
+
+     }
+
+    }
+    else{
+     handleException(task.exception,"Login Failed")
+     inProgress.value  = false
+    }
+
+   }
+
+   .addOnFailureListener { exp->
+
+    handleException(exp,"login failed")
+    inProgress.value = false
+
+   }
 
  }
 

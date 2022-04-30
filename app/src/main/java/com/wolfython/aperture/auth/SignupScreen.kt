@@ -23,11 +23,13 @@ import androidx.navigation.NavController
 import com.google.firebase.R
 import com.wolfython.aperture.DestinationScreen
 import com.wolfython.aperture.IgViewModel
+import com.wolfython.aperture.main.CheckForSignedIn
 import com.wolfython.aperture.main.CommonProgressSpinner
 import com.wolfython.aperture.main.navigateTo
 
 @Composable
 fun SignupScreen(navController: NavController, vm: IgViewModel){
+    CheckForSignedIn(vm = vm, navController =navController)
     val focus = LocalFocusManager.current
    Box(modifier = Modifier.fillMaxSize()){
 
@@ -99,7 +101,7 @@ fun SignupScreen(navController: NavController, vm: IgViewModel){
                    .padding(8.dp)
                    .clickable {
 
-                       navigateTo(navController,DestinationScreen.Login)
+                       navigateTo(navController, DestinationScreen.Login)
                    }
            )
        }

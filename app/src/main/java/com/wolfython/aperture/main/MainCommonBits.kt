@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -17,6 +19,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import com.wolfython.aperture.DestinationScreen
 import com.wolfython.aperture.IgViewModel
+import javax.annotation.CheckForSigned
 import javax.sql.CommonDataSource
 
 @Composable
@@ -56,4 +59,21 @@ fun navigateTo(navController: NavController, dest: DestinationScreen){
 
 
 
+}
+
+
+@Composable
+fun CheckForSignedIn(vm: IgViewModel,navController: NavController){
+
+    val alreadyLoggedIn = remember { mutableStateOf( false) }
+  val signedIn = vm.signedIn.value
+    if(signedIn && !alreadyLoggedIn.value){
+
+        alreadyLoggedIn.value = true
+        navController.navigate(DestinationScreen.Feed.route){
+
+
+            popUpTo(0)
+        }
+    }
 }

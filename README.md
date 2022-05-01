@@ -1,3 +1,3 @@
 # Aperture-Insta-clone
 
-Aperture is Instagram clone App build using Kotlin with Jetpack Compose.
+Aperture is Instagram clone App build using Kotlin + Jetpack Compose + MVVM + Hilt.

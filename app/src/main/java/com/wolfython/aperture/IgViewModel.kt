@@ -33,7 +33,7 @@ class IgViewModel @Inject constructor(
 
 
  init {
-  auth.signOut()
+ // auth.signOut()
   val currentUser = auth.currentUser
   signedIn.value =currentUser !=null
   currentUser?.uid?.let { uid->
@@ -88,7 +88,7 @@ class IgViewModel @Inject constructor(
      signedIn.value = true
      inProgress.value = false
      auth.currentUser?.uid?.let { uid ->
-      handleException(customMessage = "Login Success")
+    //  handleException(customMessage = "Login Success")
       getUserData(uid)
 
      }

@@ -85,7 +85,7 @@ fun LoginScreen(navController: NavController, vm: IgViewModel){
 
 
             }
-            Text(text = "New Here? Click Singup",
+            Text(text = "New Here? Click Signup",
                 color = Color.Red,
                 modifier = Modifier
                     .padding(8.dp)

@@ -79,7 +79,7 @@ fun CheckForSignedIn(vm: IgViewModel,navController: NavController){
     if(signedIn && !alreadyLoggedIn.value){
 
         alreadyLoggedIn.value = true
-        navController.navigate(DestinationScreen.Feed.route){
+        navController.navigate(DestinationScreen.MyPosts.route){
 
 
             popUpTo(0)

@@ -26,12 +26,12 @@ import com.wolfython.aperture.R
 @Composable
 
 fun MyPostsScreen(navController: NavController,vm:IgViewModel){
-val userData = vm.userData.value
-
+    val userData = vm.userData.value
     val isLoading = vm.inProgress.value
-Column() {
+
+Column {
     Column(modifier = Modifier.weight(1f)) {
-       Row() {
+       Row {
            ProfileImage(userData?.imageUrl){
 
            }
@@ -41,13 +41,13 @@ Column() {
                    .align(Alignment.CenterVertically),
                textAlign = TextAlign.Center)
 
-           Text(text = "15\nFollowers",
+           Text(text = "150M\nFollowers",
                modifier = Modifier
                    .weight(1f)
                    .align(Alignment.CenterVertically),
                textAlign = TextAlign.Center)
 
-           Text(text = "15\nFollowings",
+           Text(text = "0\nFollowings",
                modifier = Modifier
                    .weight(1f)
                    .align(Alignment.CenterVertically),
@@ -55,7 +55,7 @@ Column() {
            )
 
        }
-        Column(modifier = Modifier.padding(8.dp)) {
+        Column(modifier = Modifier.padding(12.dp)) {
             val usernameDisplay = if (userData?.username == null) "" else "@${userData?.username}"
             Text(text = userData?.name ?: "", fontWeight = FontWeight.Bold)
             Text(text = usernameDisplay)
@@ -91,8 +91,12 @@ Column() {
 
     BottomNavigationMenu(
         SelectedItem = BottomNavigationItem.POSTS,
-        navController = navController )
+        navController = navController
+    )
 }
+
+    if (isLoading)
+        CommonProgressSpinner()
 
 }
 
@@ -116,11 +120,12 @@ Box(modifier = Modifier
         border = BorderStroke(width = 2.dp, color = Color.White),
     modifier = Modifier
         .size(32.dp)
-        .align(Alignment.BottomCenter)
+        .align(Alignment.BottomEnd)
         .padding(bottom = 8.dp, end = 8.dp)
     ) {
-          Image(painter = painterResource(id = R.drawable.ic_add_24), contentDescription =null,
-          modifier = Modifier.background(Color.Yellow))
+          Image(painter = painterResource(id = R.drawable.ic_add_24),
+              contentDescription =null,
+          modifier = Modifier.background( Color(255,165,0)))
     }
 }
 

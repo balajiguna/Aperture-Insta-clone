@@ -16,6 +16,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.wolfython.aperture.auth.LoginScreen
+import com.wolfython.aperture.auth.ProfileScreen
 import com.wolfython.aperture.auth.SignupScreen
 import com.wolfython.aperture.main.FeedScreen
 import com.wolfython.aperture.main.MyPostsScreen
@@ -48,6 +49,7 @@ sealed class  DestinationScreen(val route: String){
     object Feed: DestinationScreen("Feed")
     object Search: DestinationScreen("Search")
     object MyPosts: DestinationScreen("MyPosts")
+    object Profile: DestinationScreen("Profile")
 }
 
 
@@ -74,6 +76,10 @@ fun InstagramApp(){
         }
         composable(DestinationScreen.MyPosts.route){
             MyPostsScreen(navController = navController, vm = vm )
+        }
+
+        composable(DestinationScreen.Profile.route){
+            ProfileScreen(navController = navController, vm = vm )
         }
 
     }

@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.wolfython.aperture.DestinationScreen
 import com.wolfython.aperture.IgViewModel
 import com.wolfython.aperture.R
 
@@ -64,7 +65,7 @@ Column {
         }
 
 
-        OutlinedButton(onClick = {},
+        OutlinedButton(onClick = { navigateTo(navController = navController,DestinationScreen.Profile) },
             modifier = Modifier
                 .padding(8.dp)
                 .fillMaxWidth(),

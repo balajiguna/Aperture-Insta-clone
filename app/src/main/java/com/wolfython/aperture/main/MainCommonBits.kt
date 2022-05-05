@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -132,5 +133,18 @@ Image(painter = painterResource(id = R.drawable.ic_person_24), contentDescriptio
 
 
 
+
+}
+
+@Composable
+fun CommonDivider(){
+
+
+    Divider(
+        color = Color.LightGray,
+        thickness = 1.dp,
+        modifier = Modifier.alpha(0.3f)
+            .padding(top = 8.dp, bottom = 8.dp)
+    )
 
 }

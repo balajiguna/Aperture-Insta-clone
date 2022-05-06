@@ -179,4 +179,10 @@ class IgViewModel @Inject constructor(
   popupNotification.value = Event(message)
  }
 
+ fun updateProfileData(name: String,username: String,bio: String){
+
+  createOrUpdateProfile(name,username,bio)
+
+ }
+
 }

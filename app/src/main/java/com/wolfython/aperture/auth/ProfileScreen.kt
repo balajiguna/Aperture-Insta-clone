@@ -46,7 +46,7 @@ val isLoading = vm.inProgress.value
             onNameChange = { name = it },
             OnUserNameChange = { username = it },
             onBioChange = { bio = it },
-            onSave = { },
+            onSave = { vm.updateProfileData(name,username, bio)},
             onBack = { navigateTo(navController = navController,DestinationScreen.MyPosts)},
            onLogout = { })
     }

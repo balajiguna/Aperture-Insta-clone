@@ -1,5 +1,6 @@
 package com.wolfython.aperture
 
+import android.net.Uri
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -12,6 +13,7 @@ import com.wolfython.aperture.data.Event
 import com.wolfython.aperture.data.UserData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.lang.Exception
+import java.util.*
 import javax.inject.Inject
 import kotlin.math.exp
 
@@ -183,6 +185,33 @@ class IgViewModel @Inject constructor(
 
   createOrUpdateProfile(name,username,bio)
 
+ }
+
+ fun uploadImage(uri: Uri, onSuccess: (Uri) -> Unit){
+  inProgress.value=true
+  val storageRef = storage.reference
+  val uuid = UUID.randomUUID()
+  val imagreRef = storageRef.child("image/$uuid")
+  val uploadTask = imagreRef.putFile(uri)
+
+  uploadTask.addOnSuccessListener {
+   val result = it.metadata?.reference?.downloadUrl
+   result?.addOnSuccessListener(onSuccess)
+
+  }
+   .addOnFailureListener { exc ->
+     handleException(exc)
+    inProgress.value = false
+
+   }
+ }
+
+ fun uploadProfileImage(uri: Uri){
+
+  uploadImage(uri){
+
+   createOrUpdateProfile(imageUrl = it.toString())
+  }
  }
 
 }

@@ -1,10 +1,15 @@
 package com.wolfython.aperture.auth
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
@@ -21,6 +26,7 @@ import androidx.navigation.NavController
 import com.wolfython.aperture.DestinationScreen
 import com.wolfython.aperture.IgViewModel
 import com.wolfython.aperture.main.CommonDivider
+import com.wolfython.aperture.main.CommonImage
 import com.wolfython.aperture.main.CommonProgressSpinner
 import com.wolfython.aperture.main.navigateTo
 
@@ -69,6 +75,7 @@ fun ProfileContent(
 {
 
     val scrollState = rememberScrollState()
+    val imageUrl = vm.userData?.value?.imageUrl
     
     Column(modifier = Modifier
         .verticalScroll(scrollState)
@@ -84,13 +91,7 @@ fun ProfileContent(
         }
 
         CommonDivider()
-        //User image
-        Column(modifier = Modifier
-            .height(200.dp)
-            .fillMaxWidth()
-            .background(Color.Gray)) {
-
-        }
+       ProfileImage(imageUrl = imageUrl, vm = vm)
 
       CommonDivider()
         Row(modifier = Modifier
@@ -154,6 +155,39 @@ fun ProfileContent(
             Text(text = "Logout", modifier = Modifier.clickable { onLogout.invoke() })
             
         }
+    }
+
+
+}
+
+
+@Composable
+fun ProfileImage(imageUrl: String?, vm: IgViewModel){
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ){uri: Uri? ->
+
+           uri?.let { vm.uploadProfileImage(uri) }
+        }
+
+
+
+    Box(modifier = Modifier.height(IntrinsicSize.Min)){
+        Column(modifier = Modifier
+            .padding(8.dp)
+            .fillMaxWidth()
+            .clickable {launcher.launch("image/*") }, horizontalAlignment = Alignment.CenterHorizontally) {
+            Card(shape = CircleShape, modifier = Modifier
+                .padding(8.dp)
+                .size(100.dp)) {
+                CommonImage(data = imageUrl)
+            }
+          Text(text = "Change profile picture")
+        }
+
+        val isLoading = vm.inProgress.value
+            if (isLoading)
+                CommonProgressSpinner()
     }
 
 

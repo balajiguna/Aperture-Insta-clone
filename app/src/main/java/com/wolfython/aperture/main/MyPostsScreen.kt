@@ -1,5 +1,8 @@
 package com.wolfython.aperture.main
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -12,6 +15,7 @@ import androidx.compose.material.Card
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,6 +31,16 @@ import com.wolfython.aperture.R
 @Composable
 
 fun MyPostsScreen(navController: NavController,vm:IgViewModel){
+    val newPostImageLauncher= rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent(),
+    ){uri ->
+        uri?.let {
+            val encoded = Uri.encode(it.toString())
+            val route = DestinationScreen.NewPost.createRoute(encoded)
+            navController.navigate(route)
+        }
+
+    }
     val userData = vm.userData.value
     val isLoading = vm.inProgress.value
 
@@ -34,6 +48,7 @@ Column {
     Column(modifier = Modifier.weight(1f)) {
        Row {
            ProfileImage(userData?.imageUrl){
+               newPostImageLauncher.launch("image/*")
 
            }
            Text(text = "15\nposts",

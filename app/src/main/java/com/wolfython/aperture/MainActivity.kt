@@ -18,10 +18,7 @@ import androidx.navigation.compose.rememberNavController
 import com.wolfython.aperture.auth.LoginScreen
 import com.wolfython.aperture.auth.ProfileScreen
 import com.wolfython.aperture.auth.SignupScreen
-import com.wolfython.aperture.main.FeedScreen
-import com.wolfython.aperture.main.MyPostsScreen
-import com.wolfython.aperture.main.NotificationMessage
-import com.wolfython.aperture.main.SearchScreen
+import com.wolfython.aperture.main.*
 import com.wolfython.aperture.ui.theme.ApertureTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -50,6 +47,10 @@ sealed class  DestinationScreen(val route: String){
     object Search: DestinationScreen("Search")
     object MyPosts: DestinationScreen("MyPosts")
     object Profile: DestinationScreen("Profile")
+    object NewPost:DestinationScreen("newpost/{imageUri}"){
+
+        fun createRoute(uri: String) = "newpost/$uri"
+    }
 }
 
 
@@ -80,6 +81,13 @@ fun InstagramApp(){
 
         composable(DestinationScreen.Profile.route){
             ProfileScreen(navController = navController, vm = vm )
+        }
+        composable(DestinationScreen.NewPost.route){ navBackStackEntry ->
+            val imageUri = navBackStackEntry.arguments?.getString("imageUri")
+            imageUri?.let {
+                NewPostScreen(navController = navController, vm = vm, encodedUri = it)
+            }
+
         }
 
     }

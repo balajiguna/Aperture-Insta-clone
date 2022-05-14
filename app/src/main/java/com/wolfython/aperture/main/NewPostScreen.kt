@@ -33,7 +33,7 @@ Column(modifier = Modifier.verticalScroll(scrollState).fillMaxWidth()) {
  Text(text = "Cancel", modifier = Modifier.clickable { navController.popBackStack() })
         Text(text = "Post", modifier = Modifier.clickable {
             focusManager.clearFocus()
-       //call the vm
+       vm.onNewPost(Uri.parse(imageUri),description){navController.popBackStack()}
 
 
         })

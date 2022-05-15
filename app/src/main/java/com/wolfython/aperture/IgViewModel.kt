@@ -1,11 +1,13 @@
 package com.wolfython.aperture
 
 import android.net.Uri
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
@@ -34,6 +36,9 @@ class IgViewModel @Inject constructor(
  val inProgress = mutableStateOf(false)
  val userData = mutableStateOf<UserData?>(null)
  val popupNotification = mutableStateOf<Event<String>?>(null)
+
+ val refreshPostProgress = mutableStateOf(false)
+ val posts = mutableStateOf<List<PostData>>(listOf())
 
 
  init {
@@ -168,6 +173,7 @@ class IgViewModel @Inject constructor(
     val user = it.toObject<UserData>()
     userData.value = user
     inProgress.value = false
+    refreshPost()
    }
 
    .addOnFailureListener { exc ->
@@ -260,6 +266,7 @@ val postUuid = UUID.randomUUID().toString()
     .addOnSuccessListener {
      popupNotification.value = Event("Post successfully created")
      inProgress.value = false
+     refreshPost()
      onPostSuccess.invoke()
     }
 
@@ -274,6 +281,43 @@ val postUuid = UUID.randomUUID().toString()
    onLogout()
    inProgress.value = false
   }
+
+ }
+
+ private fun refreshPost(){
+ val currentUid = auth.currentUser?.uid
+
+  if (currentUid != null){
+
+   refreshPostProgress.value = true
+    db.collection(POSTS).whereEqualTo("userId",currentUid).get()
+     .addOnSuccessListener { documents ->
+      convertPosts(documents, posts)
+      refreshPostProgress.value = false
+     }
+     .addOnFailureListener{exc ->
+
+      handleException(exc, "Cannot Fetch posts")
+
+      refreshPostProgress.value = false
+
+     }
+
+  }else{
+
+   handleException(customMessage = "Error: username unavailable. Unable  to refresh posts")
+  }
+ }
+
+ private fun convertPosts(documents: QuerySnapshot, outState: MutableState<List<PostData>>){
+  val newPosts = mutableListOf<PostData>()
+  documents.forEach{ doc ->
+   val post = doc.toObject<PostData>()
+   newPosts.add(post)
+
+  }
+  val sortedPost = newPosts.sortedByDescending { it.time }
+  outState.value = sortedPost
 
  }
 
